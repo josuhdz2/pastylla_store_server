@@ -1,0 +1,41 @@
+<%-include('templates/init.ejs')%>
+<%-include('templates/menu.ejs')%>
+<div class="p-5">
+    <div class="text-center">
+        <h3>Registro de producto</h3>
+    </div>
+    <form method="post" action="/productos/registroProducto" enctype="multipart/form-data">
+        <div class="card p-3 border border-dark">
+            <div class="my-1">
+                <label for="tipo" class="form-label">Tipo de producto</label>
+                <input id="tipo" type="text" class="form-control" name="tipo">
+            </div>
+            <div class="my-1">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input id="nombre" type="text" class="form-control" name="nombre">
+            </div>
+            <div class="my-1">
+                <label for="marca" class="form-label">Marca</label>
+                <input id="marca" type="text" class="form-control" name="marca">
+            </div>
+            <div class="my-1">
+                <label for="tallas" class="form-label">Tallas (24.5-28.5)</label>
+                <input id="tallas" type="text" class="form-control" name="tallas">
+            </div>
+            <div class="my-1">
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <textarea id="descripcion" type="text" class="form-control" name="descripcion"></textarea>
+            </div>
+            <div class="my-1">
+                <label for="precio" class="form-label">Precio</label>
+                <input id="precio" type="number" class="form-control" name="precio">
+            </div>
+            <div class="my-1">
+                <label for="imagenes" class="form-label">Imagenes</label>
+                <input id="imagenes" type="file" class="form-control" name="imagenes" multiple accept="image/*">
+            </div>
+            <button class="btn btn-warning my-1">Agregar al catalogo</button>
+        </div>
+    </form>
+</div>
+<%-include('templates/end.ejs')%>

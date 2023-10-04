@@ -1,0 +1,29 @@
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand" href="#">
+            <a data-bs-toggle="offcanvas" href="#menuOffCanvas" role="button" aria-controls="menuOffCanvas">
+                <img src="/menu.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            </a>
+            Administracion de Pastylla Store
+        </span>
+    </div>
+</nav>
+<div class="offcanvas offcanvas-start bg-dark text-light" tabindex="-1" id="menuOffCanvas" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+        <button type="button" class="btn-close text-reset btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            <p>Administracion de catalogo digital</p>
+            <div class="list-group">
+                <a class="list-group-item bg-dark text-light" href="/admin/listaProductos">
+                    <h5>Lista de productos</h5>
+                </a>
+                <a class="list-group-item bg-dark text-light" href="/admin/registroProducto">
+                    <h5>Registro de producto</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

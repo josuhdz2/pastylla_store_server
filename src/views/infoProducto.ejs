@@ -1,0 +1,63 @@
+<%-include('templates/init.ejs')%>
+<%-include('templates/menu.ejs')%>
+<style>
+    .carrucel{
+        overflow-x: scroll;
+    }
+</style>
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-header text-center">
+            <h2><%=prod.nombre%></h2>
+        </div>
+        <div class="card-body">
+            <div class="input-group p-2">
+                <span class="input-group-text">Id de producto:</span>
+                <input type="text" class="form-control" value="<%=prod._id%>" disabled>
+            </div>
+            <div class="input-group p-2">
+                <span class="input-group-text">Tipo:</span>
+                <input type="text" class="form-control" value="<%=prod.tipo%>" disabled>
+            </div>
+            <div class="input-group p-2">
+                <span class="input-group-text">Marca:</span>
+                <input type="text" class="form-control" value="<%=prod.marca%>" disabled>
+            </div>
+            <div class="input-group p-2">
+                <span class="input-group-text">Tallas:</span>
+                <input type="text" class="form-control" value="<%=prod.tallas%>" disabled>
+            </div>
+            <div class="input-group p-2">
+                <span class="input-group-text">Descripcion:</span>
+                <textarea class="form-control" disabled><%=prod.descripcion%></textarea>
+            </div>
+            <div class="input-group p-2">
+                <span class="input-group-text">Precio:</span>
+                <span class="input-group-text">$</span>
+                <input type="text" class="form-control" value="<%=prod.precio%>">
+                <span class="input-group-text">.00</span>
+            </div>
+            <div class="p-2">
+                <h4>Imagenes</h4>
+                <div class="carrucel">
+                    <%
+                    prod.imagenes.forEach((img)=>
+                    {
+                    %>
+                    <img class="p-1" width="20%" src="/images/<%=img%>" alt="<%=img%>">
+                    <%
+                    })
+                    %>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="text-center">
+                <h3>Acciones</h3>
+                <button class="btn btn-success btn-lg m-3">Editar</button>
+                <button class="btn btn-warning btn-lg m-3">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include('templates/end.ejs')%>

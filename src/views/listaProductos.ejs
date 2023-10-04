@@ -1,0 +1,39 @@
+<%-include('templates/init.ejs')%>
+<%-include('templates/menu.ejs')%>
+<div class="p-5">
+    <div class="text-center">
+        <h3>Lista de productos</h3>
+    </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Tallas</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Modelo (opcional)</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%
+            prodList.forEach((prod)=>
+            {
+          %>
+          <tr>
+            <th scope="row"><%=prod.nombre%></th>
+            <td><%=prod.tipo%></td>
+            <td><%=prod.marca%></td>
+            <td><%=prod.tallas%></td>
+            <td><%=prod.precio%></td>
+            <td><%=prod.opcional_modelo%></td>
+            <td><a class="btn btn-sm btn-success" href="/admin/producto/<%=prod._id%>">Detalles</a></td>
+          </tr>
+          <%
+            })
+          %>
+        </tbody>
+      </table>
+</div>
+<%-include('templates/end.ejs')%>
