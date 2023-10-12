@@ -7,6 +7,7 @@ const productoSchema=new Schema({
     descripcion:{type:String, requires:true},
     precio:{type:Number, required:true},
     imagenes:{type:Array, required:true},
+    estado:{type:Boolean, default:true},
     opcional_modelo:{type:String},
     opcional_video:{type:String}
 });
