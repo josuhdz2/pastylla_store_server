@@ -7,7 +7,7 @@ const productsRouter=require('./routes/products');
 const adminRouter=require('./routes/admin');
 const userRouter=require('./routes/user')
 mongoose.set('strictQuery', false);
-console.log(process.env.LOCAL_DATABASE_URL)
+console.log(process.env.DATABASE_URL)
 mongoose.connect(process.env.LOCAL_DATABASE_URL)
 .then(()=>
 {
