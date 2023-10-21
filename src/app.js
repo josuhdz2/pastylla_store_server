@@ -8,7 +8,7 @@ const adminRouter=require('./routes/admin');
 const userRouter=require('./routes/user')
 mongoose.set('strictQuery', false);
 console.log(process.env.DATABASE_URL)
-mongoose.connect(process.env.LOCAL_DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL)
 .then(()=>
 {
     console.log('Database connected...');

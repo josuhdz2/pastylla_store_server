@@ -1,7 +1,7 @@
 const app=require('../src/app');
 const {faker}=require('@faker-js/faker');
 const supertest=require('supertest');
-const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW9UZXN0IiwiZW1haWwiOiJjb3JyZW90ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTY5NjQ2OTUxOH0.AT_hD_JHwkdWjL21KLKJ3TBN6D3D7p1oKsmSNcAtNd8';
+const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlBlbmVsb3BlNDEiLCJlbWFpbCI6IkNocmlzdGlhbmFfU2Nob2VuMTVAeWFob28uY29tIiwiaWF0IjoxNjk3OTIwMzMzfQ.xWLP_k7hAoaKZGN3m6-7vM_YgzNhij3ygTjopfYaI50";
 describe('Escaneo de rutas', ()=>
 {
     test('verificar existencia de ruta /', async()=>
@@ -24,9 +24,9 @@ describe('Escaneo de rutas', ()=>
         const response=await supertest(app).get('/admin/listaProductos').send();
         expect(response.statusCode).toBe(200);
     });
-    test('verificar existencia de ruta /admin/producto/650bdea21fad02a7ee5eb840', async()=>
+    test('verificar existencia de ruta /admin/producto/653432dbc1b8001685f572ce', async()=>
     {
-        const response=await supertest(app).get('/admin/producto/650bdea21fad02a7ee5eb840').send();
+        const response=await supertest(app).get('/admin/producto/653432dbc1b8001685f572ce').send();
         expect(response.statusCode).toBe(200);
     });
     test('verificar existencia de ruta /admin/registroProducto', async()=>
@@ -44,8 +44,8 @@ describe('Obtencion de respueta de API para generacion de comentarios', ()=>
         .set('Authorization', token)
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
-            productoId:"650bdea21fad02a7ee5eb840",
-            comentario:"Este producto es muy bueno y cumple con mis espectativas."
+            productoId:"653432dbc1b8001685f572ce",
+            comentario:`Este producto es muy bueno y cumple con mis espectativas ${faker.internet.password()}`
         });
         expect(response.statusCode).toBe(200);
     });
@@ -71,7 +71,7 @@ describe('Sesion de usuario', ()=>
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
             username:"otro usuario",
-            email:"correotest@gmail.com",
+            email:"Lincoln_Tremblay2@yahoo.com",
             password:"nuevapassword"
         });
         expect(response.body.response).toBe('failed');
@@ -82,7 +82,7 @@ describe('Sesion de usuario', ()=>
         .post('/usuario/login')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
-            email:"correotest2@gmail.com",
+            email:"Cooper45@yahoo.com",
             password:"12345678"
         });
         expect(response.body.response).toBe('success');
@@ -126,7 +126,7 @@ describe('Obtencion y busqueda de productos', ()=>
 {
     test('obtencion de la informacion de un producto', async()=>
     {
-        const response=await supertest(app).get('/productos/infoProducto/651d28afa9c8ca35fded9775').send();
+        const response=await supertest(app).get('/productos/infoProducto/653432dbc1b8001685f572ce').send();
         console.log(response.body);
         expect(response.body.response).toBe("success");
     });
