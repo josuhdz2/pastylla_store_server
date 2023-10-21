@@ -7,7 +7,7 @@ const ProductoModelo=require('../models/producto');
 const UsuarioModelo=require('../models/usuarios');
 const path=require('path');
 
-const firebaseConfig =require('../keys/pastyllastorestorage-a3aaab11f297.json');
+const firebaseConfig=require('etc/secrets/pastyllastorestorage-a3aaab11f297.json');
 initializeApp({
     credential:cert(firebaseConfig),
     storageBucket:"pastyllastorestorage.appspot.com"

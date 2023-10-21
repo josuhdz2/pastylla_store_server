@@ -117,7 +117,7 @@ describe('Manejo de informacion de usuario', ()=>
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
             username:faker.internet.userName(),
-            email:faker.internet.email(),
+            email:faker.internet.email()
         });
         expect(response.body.response).toBe('success');
     })
