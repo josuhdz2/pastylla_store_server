@@ -6,7 +6,7 @@ const usuarioSchema=new Schema({
     comentarios:{type:Array}
     /*
     [{
-        productoID,
+        productoId,
         contenido
     }]
     */

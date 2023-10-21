@@ -150,5 +150,20 @@ ruta.post('/comentar', verify, (req, res)=>
         console.log(err);
         res.json({response:"failed", error:"Ha ocurrido un error al realizar el comentario"});
     });
+});
+ruta.get('/eliminarCuenta', verify, (req, res)=>
+{
+    console.log(req.body.userInfo);
+    UserModel.findOneAndDelete({email:req.body.userInfo.email})
+    .then((data)=>
+    {
+        console.log('cuenta eliminada');
+        res.json({response:"success"});
+    })
+    .catch((err)=>
+    {
+        console.log(err);
+        res.json({response:"failed", error:"No se encontro usuario a eliminar"});
+    })
 })
 module.exports=ruta;

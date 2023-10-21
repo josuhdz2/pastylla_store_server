@@ -1,6 +1,7 @@
 const ruta=require('express').Router();
 const multer=require('multer');
-const ProductoModelo=require('../models/producto')
+const ProductoModelo=require('../models/producto');
+const UsuarioModelo=require('../models/usuarios');
 const path=require('path');
 const { verify } = require('crypto');
 const storage=multer.diskStorage({
@@ -55,14 +56,75 @@ ruta.post('/registroProducto', upload.array('imagenes', 10), (req, res)=>
         res.send("Error en la base de datos");
     });
 });
+ruta.get('/comentarios/:id', (req, res)=>
+{
+    UsuarioModelo.aggregate([
+        {$unwind:{path:'$comentarios'}},
+        {$match:{'comentarios.productoId':req.params.id}},
+        {$project:{username:1, comentarios:1}}
+    ])
+    .then((comen)=>
+    {
+        console.log(comen);
+        res.json({response:"success", comentarios:comen});
+    })
+    .catch((err)=>
+    {
+        console.log(err);
+        res.json({response:"failed", error:"No se pudo realizar la consulta de comentarios"})
+    })
+});
+ruta.post('/favoritos', (req, res)=>
+{
+    var listaIds=req.body.lista.split(",");
+    ProductoModelo.find({_id:{$in:listaIds}})
+    .then((prod)=>
+    {
+        if(Object.keys(prod).length!=0)
+        {
+            res.json({response:"success", lista:prod});
+        }
+        else
+        {
+            res.json({response:"failed", error:"No se encontraron los productos"})
+        }
+    })
+    .catch((err)=>
+    {
+        console.log(err);
+        res.json({response:"failed", error:"error en la base de datos"});
+    })
+});
+ruta.post('/prodCarritos', (req, res)=>
+{
+    var listaIds=req.body.lista.split(",");
+    ProductoModelo.find({_id:{$in:listaIds}})
+    .then((prod)=>
+    {
+        if(Object.keys(prod).length!=0)
+        {
+            res.json({response:"success", carrito:prod});
+        }
+        else
+        {
+            res.json({response:"failed", error:"No se encontraron los productos"})
+        }
+    })
+    .catch((err)=>
+    {
+        console.log(err);
+        res.json({response:"failed", error:"error en la base de datos"});
+    })
+});
 ruta.get('/infoProducto/:id', (req, res)=>
 {
     ProductoModelo.findById(req.params.id)
     .then((prod)=>
     {
+        console.log("info del prod", prod)
         if(prod)
         {
-            res.json({response:"success", producto:prod});
+            res.json({response:"success", producto:prod})
         }
         else
         {
@@ -75,6 +137,19 @@ ruta.get('/infoProducto/:id', (req, res)=>
         res.json({response:"failed", error:"No se ha podido realizar la busqueda de productos"})
     })
 });
+ruta.post('/categoria', (req, res)=>
+{
+    ProductoModelo.find({tipo:req.body.categoria})
+    .then((prod)=>
+    {
+        res.json({response:"success", lista:prod});
+    })
+    .catch((err)=>
+    {
+        console.log(err);
+        res.json({response:"failed", error:"Ha ocurrido un error interno"});
+    });
+})
 ruta.post('/buscar', (req, res)=>
 {
     ProductoModelo.find({nombre:{$regex:req.body.busqueda}})
