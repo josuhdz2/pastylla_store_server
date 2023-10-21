@@ -1,4 +1,5 @@
 const app=require('../src/app');
+const {faker}=require('@faker-js/faker');
 const supertest=require('supertest');
 const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW9UZXN0IiwiZW1haWwiOiJjb3JyZW90ZXN0QGdtYWlsLmNvbSIsImlhdCI6MTY5NjQ2OTUxOH0.AT_hD_JHwkdWjL21KLKJ3TBN6D3D7p1oKsmSNcAtNd8';
 describe('Escaneo de rutas', ()=>
@@ -51,18 +52,18 @@ describe('Escaneo de rutas', ()=>
 });*/
 describe('Sesion de usuario', ()=>
 {
-    /*test('registro de nuevo usuario', async()=>
+    test('registro de nuevo usuario', async()=>
     {
         const response=await supertest(app)
         .post('/usuario/registro')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
-            username:"nuevousuario1",
-            email:"correodeprueba1@gmail.com",
+            username:faker.internet.userName(),
+            email:faker.internet.email(),
             password:"12345678"
         });
         expect(response.body.response).toBe('success');
-    });*/
+    });
     test('registro de usuario con informacion existente', async()=>
     {
         const response=await supertest(app)
