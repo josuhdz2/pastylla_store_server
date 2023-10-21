@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "pastyllastorestorage",
+  "private_key_id": "a3aaab11f2974593ee1b2ea0eb429ed76d03a0f3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQDIKnNd+y3bEcsd\nTVukwuqo+R8X2zjQjBp1okMqrMbV06SNj86qXFUeR7gNqEwuoGCYqq2d3yB78ucE\nywI7aGKIMlht7lpuC6mcqZaS6B9BhWsWA1Gaq2CIYEOI6C7OWETQ9cQY56zewb8b\nQXIefYfbq3NwvwoVi/I0PtAnPlrFRJNoiklvBF+PGxj7LJyj7rl/rxeqWoYIbSUi\n6El/xmyFooXi6PZfrF4VroFz4C+StbBrhpBlFDSOWjel8+TnSa1pwPFeX5bgkBsx\nUEE02AlgcVdg5Vb8WMsBFhEKx8Neafy4qzPF1HQ3dy1EeCjlu65muWD5f1H32uS1\ns0qyfDlxAgMBAAECgf9QNFfAJuAiSSb8XU+BpALLfezS/N/WvoEOKzGhCrexIBJe\nSL6ZylsQfeCOnZ7gTO/7xeBB1pyLmToZWnvfz3Sthp/oTwWEn9Jdo67MChBSUc/m\n/OyTDuKDaCQP8tKkqVaIL/kFTJKWnf9d2w31uH1PGk8iI9ZQz2LU/ZovLwaB6E4r\n4W/hvEOD5ZO7SIzlUjt2U8SrVozm3BeusOs6rAJ3Ks9dUpJytE4zlJg2jdcE2Sfw\njTTK9rpoKTAMmRnDVZQxk21c/SiUJFdvknhvmkn5QWcSrc605DQJek1ZqNEV4SXA\n24SRsJoybwpfYc415rtBL92eNa3VIqjUAsvipTECgYEA/I1FT08TmHKvr1Vn399/\nKnf+ziZ+mQpULzWD98/JphWFNLLePilha4G2aF9rR+zTa9grVWAMF0EVwPmVXNX+\nKz8Iyb9Pqfwl2L5d+ywf+YwQU/USwArM08QQBN0tw6V3Gt7sSWY2RGCfjBSejBSv\n9HM09N/uQyibF+YEpiYTiZ0CgYEAyuYUBi1qH+NDl2UcXcpxkKPbszli2yDG8Nbg\nd5wgbPKNAIJFe7emFdqok33nqFpVEqYDmnjZxgwl4XZSddDRA17Tp0W99t4UZqVH\nU2ituuoB5saZpAnc2YDHKo4pg+7LdPmZhFQDb5DJ+zmpMLzLK7eWX1x9VgIz5LRO\nNxEAoOUCgYBA4fZtgq5RGx3BmNp/7IZaHcvroH4jyUCJhGEsGEkBD0RSnqV0KONr\nYD7Bn8oLB2/lo/q2C1/v1XvGQRi7agrLh301f53y2OHMRlQUxGhOj0pel3bCucOX\noCZRaZVpTyhDUgQ4czb76Cr1LRLygBoYXkS7qJAo1tTJlgGZweyBDQKBgQCeuQYJ\nHxXaBCsoEAz0wh29DLIdrlLLIQT/+th2OUiUcdoj/8TjV3MxvXAKkX/bj27lu8Et\n4kRaTb6Edc9kIwqfHFtui3xj1q8W7Uyyzzy47761Db+7N4vxCnDDtZp8fx3iUC/r\n+N0HNbkMMrtMSSSW+nND/lJ+KhL2YqadJUvckQKBgCVizIYhAEtvKojis60nKjbN\nOZsPTMQkCzQf6g7jto92BfZ+xSUoNmUCu2ZA82CZfAdyOPtjcX8BdyT81FtxaKjc\nZQn+MI24RU0vZ64aG/K1ytMctGJ4730/GenVId/zIGx/8dyFgx1zEhM61Qvo4nsX\nXgcidTFpkkg4VBsrPvJy\n-----END PRIVATE KEY-----\n",
+  "client_email": "pastyllastorestorage@appspot.gserviceaccount.com",
+  "client_id": "103821155238109490638",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pastyllastorestorage%40appspot.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -35,7 +35,7 @@ describe('Escaneo de rutas', ()=>
         expect(response.statusCode).toBe(200);
     });
 });
-/*describe('Obtencion de respueta de API para generacion de comentarios', ()=>
+describe('Obtencion de respueta de API para generacion de comentarios', ()=>
 {
     test('creacion de comentario', async()=>
     {
@@ -49,7 +49,7 @@ describe('Escaneo de rutas', ()=>
         });
         expect(response.statusCode).toBe(200);
     });
-});*/
+});
 describe('Sesion de usuario', ()=>
 {
     test('registro de nuevo usuario', async()=>
@@ -82,7 +82,7 @@ describe('Sesion de usuario', ()=>
         .post('/usuario/login')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
-            email:"correotest@gmail.com",
+            email:"correotest2@gmail.com",
             password:"12345678"
         });
         expect(response.body.response).toBe('success');
@@ -109,21 +109,24 @@ describe('Manejo de informacion de usuario', ()=>
         .send();
         expect(response.body.response).toBe('success');
     });
-    /*test('modificacion de la informacion del usuario', async()=>
+    test('modificacion de la informacion del usuario', async()=>
     {
         const response=await supertest(app)
         .post('/usuario/modificarInfo')
         .set('Authorization', token)
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send();
+        .send({
+            username:faker.internet.userName(),
+            email:faker.internet.email(),
+        });
         expect(response.body.response).toBe('success');
-    })*/
+    })
 });
 describe('Obtencion y busqueda de productos', ()=>
 {
     test('obtencion de la informacion de un producto', async()=>
     {
-        const response=await supertest(app).get('/productos/infoProducto/653052c0971ff4ed855bdb8d').send();
+        const response=await supertest(app).get('/productos/infoProducto/651d28afa9c8ca35fded9775').send();
         console.log(response.body);
         expect(response.body.response).toBe("success");
     });
