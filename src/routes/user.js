@@ -115,7 +115,7 @@ ruta.post('/login', (req, res)=>
                     username:user.username,
                     email:user.email
                 };
-                var userToken=jwt.sign(usuario, secretJwt);
+                var userToken=jwt.sign(usuario, secretJwt, {expiresIn:60*5});
                 res.json({response:"success", token:userToken});
             }
             else
