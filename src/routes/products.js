@@ -51,6 +51,73 @@ ruta.get('/vistaGeneral', (req, res)=>
         res.json({response:"failed", error:"Error interno en la base de datos"});
     })
 });
+ruta.post('/actualizar/:id', (req, res)=>
+{
+    console.log(req.body)
+    ProductoModelo.findByIdAndUpdate(req.params.id, {$set:req.body})
+    .then((prod)=>
+    {
+        res.redirect('/admin/listaProductos');
+    })
+    .catch((err)=>
+    {
+        console.log(err);
+        res.status(400).send("Ha ocurrido un error.");
+    });
+});
+ruta.post('/agregarImagenes/:id', (req, res)=>
+{
+    upload(req, res, (err)=>
+    {
+        if(err)
+        {
+            return res.status(400).send("Error al enviar imagenes");
+        }
+        if(!req.files || req.files.length===0)
+        {
+            return res.status(400).send("No se agregaro imagenes");
+        }
+        const bucket=getStorage().bucket();
+        const imagenesPromise=[];
+        req.files.forEach((file, index)=>
+        {
+            const nombreImagen=`imagen${uuidv4()}.png`;
+            const blob=bucket.file(nombreImagen);
+            const buffer=file.buffer;
+            const blobStream=blob.createWriteStream();
+            imagenesPromise.push(
+                new Promise((resolve, reject)=>
+                {
+                    blobStream.on("error", (err)=>
+                    {
+                        reject(err);
+                    });
+                    blobStream.on("finish", ()=>
+                    {
+                        resolve(nombreImagen);
+                        //url de acceso: https://firebasestorage.googleapis.com/v0/b/pastyllastorestorage.appspot.com/o/imagen62530ab0-4ac7-4ece-938e-4b9fee470163.png?alt=media
+                    });
+                    blobStream.end(buffer);
+                })
+            )
+        });
+        Promise.all(imagenesPromise)
+        .then((nombres)=>
+        {
+            console.log(nombres)
+            ProductoModelo.findByIdAndUpdate(req.params.id, {$addToSet:{imagenes:{$each:nombres}}})
+            .then((prod)=>
+            {
+                res.redirect('/admin/listaProductos')
+            })
+            .catch((err)=>
+            {
+                console.log(err);
+                res.status(400).send("Error al guardar las imagenes");
+            });
+        })
+    })
+})
 ruta.post('/registroProducto', (req, res)=>//nueva ruta
 {
     upload(req, res, (err)=>
@@ -109,6 +176,63 @@ ruta.post('/registroProducto', (req, res)=>//nueva ruta
         })
     })
 });
+ruta.get('/eliminarProducto/:id', (req, res)=>
+{
+    ProductoModelo.findByIdAndDelete(req.params.id)
+    .then(async (prod)=>
+    {
+        console.log(prod)
+        try
+        {
+            const bucket=getStorage().bucket();
+            for(const idImagen of prod.imagenes)
+            {
+                const file=bucket.file(idImagen);
+                await file.delete();
+            }
+            res.status(200).send();
+        }
+        catch(err)
+        {
+            console.log(err)
+            res.status(400).send();
+        }
+    })
+    .catch((err)=>
+    {
+        console.log(err);
+        res.status(400).send();
+    })
+})
+ruta.get('/eliminarImagen/:id', (req, res)=>
+{
+    console.log("se esta eliminando")
+    const bucket=getStorage().bucket();
+    ProductoModelo.findOneAndUpdate({imagenes:req.params.id}, {$pull:{imagenes:req.params.id}})
+    .then((prod)=>
+    {
+        console.log(prod)
+        const blob=bucket.file(req.params.id);
+        blob.delete()
+        .then((ok)=>
+        {
+            console.log("se elimino correctamente");
+            res.status(200).send();
+        })
+        .catch((err)=>
+        {
+            console.log("no se pudo eliminar")
+            console.log(err)
+            res.status(400).send();
+        });
+    })
+    .catch((err)=>
+    {
+        console.log("error en la base de datos")
+        console.error(err)
+        res.status(400);
+    })
+})
 /*ruta.post('/registroProducto', upload.array('imagenes', 10), (req, res)=>
 {
     req.body.imagenes=req.files.map(objeto=>objeto.filename);

@@ -3,6 +3,13 @@
 <style>
     .carrucel{
         overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+    .agregar{
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>
 <div class="container">
@@ -13,28 +20,32 @@
         <div class="card-body">
             <div class="input-group p-2">
                 <span class="input-group-text">Id de producto:</span>
-                <input type="text" class="form-control" value="<%=prod._id%>" disabled>
+                <input type="text" class="form-control" value="<%=prod._id%>" id="id" disabled>
+            </div>
+            <div class="input-group p-2">
+                <span class="input-group-text">Nombre:</span>
+                <input type="text" class="form-control" value="<%=prod.nombre%>" id="nombre" disabled>
             </div>
             <div class="input-group p-2">
                 <span class="input-group-text">Tipo:</span>
-                <input type="text" class="form-control" value="<%=prod.tipo%>" disabled>
+                <input type="text" class="form-control" value="<%=prod.tipo%>" id="tipo" disabled>
             </div>
             <div class="input-group p-2">
                 <span class="input-group-text">Marca:</span>
-                <input type="text" class="form-control" value="<%=prod.marca%>" disabled>
+                <input type="text" class="form-control" value="<%=prod.marca%>" id="marca" disabled>
             </div>
             <div class="input-group p-2">
                 <span class="input-group-text">Tallas:</span>
-                <input type="text" class="form-control" value="<%=prod.tallas%>" disabled>
+                <input type="text" class="form-control" value="<%=prod.tallas%>" id="tallas" disabled>
             </div>
             <div class="input-group p-2">
                 <span class="input-group-text">Descripcion:</span>
-                <textarea class="form-control" disabled><%=prod.descripcion%></textarea>
+                <textarea class="form-control" disabled id="descripcion"><%=prod.descripcion%></textarea>
             </div>
             <div class="input-group p-2">
                 <span class="input-group-text">Precio:</span>
                 <span class="input-group-text">$</span>
-                <input type="text" class="form-control" value="<%=prod.precio%>">
+                <input type="text" class="form-control" id="precio" value="<%=prod.precio%>" disabled>
                 <span class="input-group-text">.00</span>
             </div>
             <div class="p-2">
@@ -44,20 +55,169 @@
                     prod.imagenes.forEach((img)=>
                     {
                     %>
-                    <img class="p-1" width="20%" src="https://firebasestorage.googleapis.com/v0/b/pastyllastorestorage.appspot.com/o/<%=img%>?alt=media" alt="<%=img%>">
+                    <button class="btn btn-outline-light m-1 boton" id="<%=img%>" data-bs-toggle="modal" data-bs-target="#eliminarModal">
+                        <img style="height: 200px;" src="https://firebasestorage.googleapis.com/v0/b/pastyllastorestorage.appspot.com/o/<%=img%>?alt=media" alt="<%=img%>">
+                    </button>
                     <%
                     })
                     %>
+                    <button class="rounded-3 btn btn-outline-success m-1" data-bs-toggle="modal" data-bs-target="#imagenModal">
+                        <div class="agregar" style="height: 200px; width: 200px;">Agregar</div>
+                    </button>
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div class="text-center">
                 <h3>Acciones</h3>
-                <button class="btn btn-success btn-lg m-3">Editar</button>
-                <button class="btn btn-warning btn-lg m-3">Eliminar</button>
+                <button class="btn btn-secondary btn-lg m-3" id="editar">Editar</button>
+                <button class="btn btn-warning btn-lg m-3" onclick="eliminarfunc('<%=prod._id%>')">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/productos/agregarImagenes/<%=prod._id%>" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="imagenes" name="imagenes" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple accept="image/*">
+                            <button class="btn btn-outline-success" type="submit" id="input">Subir</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar imagen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseas eliminar la imagen seleccionada?
+                    <input type="text" class="form-control" disabled value="" id="idImagen">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var estado=true;
+    var id=document.getElementById('id')
+    var nombre=document.getElementById('nombre')
+    var tipo=document.getElementById('tipo')
+    var marca=document.getElementById('marca')
+    var tallas=document.getElementById('tallas')
+    var desc=document.getElementById('descripcion')
+    var precio=document.getElementById('precio')
+    var boton=document.getElementById('editar')
+    var eliminar=document.querySelectorAll('.boton')
+    var idImagen=document.getElementById('idImagen');
+    function eliminarfunc(id)
+    {
+        if(confirm("Desea eliminar el producto?"))
+        {
+            fetch('/productos/eliminarProducto/'+id)
+            .then((response)=>
+            {
+                if(response.ok)
+                {
+                    window.location.href='/admin/listaProductos';
+                }
+            })
+            .catch((err)=>
+            {
+                console.log(err);
+                alert("no se elimino el producto")
+            })
+            console.log("eliminado: "+id)
+        }
+    }
+    eliminar.forEach((imagen)=>
+    {
+        imagen.addEventListener("click",()=>
+        {
+            idImagen.setAttribute('value', imagen.id);
+        });
+    })
+    document.getElementById('confirmarEliminar').addEventListener('click', ()=>
+    {
+        if(idImagen.value!='')
+        {
+            eliminarImg(idImagen.value);
+            console.log("espacio 1")
+        }
+    })
+    function eliminarImg(id)
+    {
+        console.log(id)
+        fetch('/productos/eliminarImagen/'+id)
+        .then((response)=>
+        {
+            if(response.ok)
+            {
+                window.location.reload();
+            }
+        })
+        .catch((err)=>
+        {
+            console.log(err)
+        })
+    }
+    boton.addEventListener('click', async()=>
+    {
+        var objeto={
+            tipo:tipo.value,
+            nombre:nombre.value,
+            marca:marca.value,
+            tallas:tallas.value,
+            descripcion:desc.value,
+            precio:precio.value
+        }
+        if(estado)
+        {
+            nombre.removeAttribute('disabled')
+            tipo.removeAttribute('disabled');
+            marca.removeAttribute('disabled');
+            tallas.removeAttribute('disabled');
+            desc.removeAttribute('disabled');
+            precio.removeAttribute('disabled');
+            boton.setAttribute('class', 'btn btn-success btn-lg m-3')
+            boton.innerHTML=`Guardar`;
+            estado=!estado;
+        }
+        else
+        {
+            if(confirm("Desea continuar con la operacion?"))
+            {
+                var formData = new URLSearchParams();
+                for (const key in objeto)
+                {
+                    formData.append(key, objeto[key]);
+                }
+                var response=await fetch('http://localhost:3000/productos/actualizar/'+id.value,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+                    body:formData.toString()
+                });
+                window.location.href=response.url;
+                console.log(objeto)
+            }
+        }
+    })
+</script>
 <%-include('templates/end.ejs')%>
