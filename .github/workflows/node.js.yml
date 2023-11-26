@@ -10,6 +10,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SECRET_CRYPTO: ${{ secrets.SECRET_CRYPTO }}
+      SECRET_JWT: ${{ secrets.SECRET_JWT }}
+      FIRESTORE_OBJECT: ${{ secrets.FIRESTORE_OBJECT }}
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 3
