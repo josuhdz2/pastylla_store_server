@@ -1,7 +1,8 @@
 const app=require('../src/app');
 const {faker}=require('@faker-js/faker');
 const supertest=require('supertest');
-const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlBlbmVsb3BlNDEiLCJlbWFpbCI6IkNocmlzdGlhbmFfU2Nob2VuMTVAeWFob28uY29tIiwiaWF0IjoxNjk3OTIwMzMzfQ.xWLP_k7hAoaKZGN3m6-7vM_YgzNhij3ygTjopfYaI50";
+var token="";
+var tempEmail="";
 describe('Escaneo de rutas', ()=>
 {
     test('verificar existencia de ruta /', async()=>
@@ -35,31 +36,17 @@ describe('Escaneo de rutas', ()=>
         expect(response.statusCode).toBe(200);
     });
 });
-describe('Obtencion de respueta de API para generacion de comentarios', ()=>
-{
-    test('creacion de comentario', async()=>
-    {
-        const response=await supertest(app)
-        .post('/usuario/comentar')
-        .set('Authorization', token)
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({
-            productoId:"653432dbc1b8001685f572ce",
-            comentario:`Este producto es muy bueno y cumple con mis espectativas ${faker.internet.password()}`
-        });
-        expect(response.statusCode).toBe(200);
-    });
-});
 describe('Sesion de usuario', ()=>
 {
     test('registro de nuevo usuario', async()=>
     {
+        tempEmail=faker.internet.email();
         const response=await supertest(app)
         .post('/usuario/registro')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
             username:faker.internet.userName(),
-            email:faker.internet.email(),
+            email:tempEmail,
             password:"12345678"
         });
         expect(response.body.response).toBe('success');
@@ -82,9 +69,10 @@ describe('Sesion de usuario', ()=>
         .post('/usuario/login')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
-            email:"Cooper45@yahoo.com",
+            email:tempEmail,
             password:"12345678"
         });
+        token=response.body.token;
         expect(response.body.response).toBe('success');
     });
     test('login de usuario con informacion incorrecta', async()=>
@@ -98,6 +86,21 @@ describe('Sesion de usuario', ()=>
         });
         expect(response.body.response).toBe('failed');
     })
+});
+describe('Obtencion de respueta de API para generacion de comentarios', ()=>
+{
+    test('creacion de comentario', async()=>
+    {
+        const response=await supertest(app)
+        .post('/usuario/comentar')
+        .set('Authorization', token)
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send({
+            productoId:"653432dbc1b8001685f572ce",
+            comentario:`Este producto es muy bueno y cumple con mis espectativas ${faker.internet.password()}`
+        });
+        expect(response.statusCode).toBe(200);
+    });
 });
 describe('Manejo de informacion de usuario', ()=>
 {
@@ -126,14 +129,12 @@ describe('Obtencion y busqueda de productos', ()=>
 {
     test('obtencion de la informacion de un producto', async()=>
     {
-        const response=await supertest(app).get('/productos/infoProducto/653432dbc1b8001685f572ce').send();
-        console.log(response.body);
+        const response=await supertest(app).get('/productos/infoProducto/6534b73bdfb8d5f1cfac7da6').send();
         expect(response.body.response).toBe("success");
     });
     test('obtencion de los ultimos productos para pantalla inicial', async()=>
     {
         const response=await supertest(app).get('/productos/vistaGeneral').send();
-        console.log(response.body);
         expect(response.body.response).toBeDefined();
     });
     test('busqueda de un producto no existente', async()=>
@@ -148,7 +149,7 @@ describe('Obtencion y busqueda de productos', ()=>
     });
     test('busqueda de producto existente', async()=>
     {
-        const response=await  supertest(app)
+        const response=await supertest(app)
         .post('/productos/buscar')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({
@@ -156,4 +157,4 @@ describe('Obtencion y busqueda de productos', ()=>
         })
         expect(response.body.lista).toBeInstanceOf(Array);
     })
-})
+});
