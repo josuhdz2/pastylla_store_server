@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 app.set('views','src/views/');
 app.get('/', (req, res)=>
 {
-    res.send('Servicio en linea 2');
+    res.send('Servicio en linea desde render y utilizando script de preparacion de entorno y automatizacion de despliegue.');
 });
 app.get('/metrics', async (req, res) => {
     try {
