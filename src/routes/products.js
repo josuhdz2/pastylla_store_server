@@ -6,8 +6,8 @@ const {getStorage}=require('firebase-admin/storage');
 const ProductoModelo=require('../models/producto');
 const UsuarioModelo=require('../models/usuarios');
 const path=require('path');
-
-const firebaseConfig=require(process.env.FIRESTORE_ACCOUNT);
+//const firebaseConfig=require(process.env.FIRESTORE_ACCOUNT);
+const firebaseConfig=JSON.parse(process.env.FIRESTORE_OBJECT);
 initializeApp({
     credential:cert(firebaseConfig),
     storageBucket:"pastyllastorestorage.appspot.com"
